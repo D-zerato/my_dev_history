@@ -1,17 +1,20 @@
 import React from 'react';
-import './App.css';
-import { Layout } from './ui/Layout';
-import Dashboard from './ui/template/Dashboard';
+import { Header } from './components/Header';
+import { ContactSection } from './components/ContactSection';
+import { Box, Container } from '@mui/material';
+import Projects from './components/Projects';
 
 function App() {
   return (
-    <div className="App">
-      <Layout>
-        <>
-          <Dashboard />
-        </>
-      </Layout>
-    </div>
+    <>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Header />
+        <Box sx={{ my: 8 }}>
+          <Projects />
+        </Box>
+      </Container>
+      <ContactSection />
+    </>
   );
 }
 
