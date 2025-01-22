@@ -1,21 +1,31 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyles from './styles/GlobalStyles';
 import { Header } from './components/Header';
-import { ContactSection } from './components/ContactSection';
-import { Box, Container } from '@mui/material';
-import Projects from './components/Projects';
+import Footer from './components/Footer';
+import { Home } from './components/Home';
 
-function App() {
+const lightTheme = {
+  background: '#ffffff',
+  text: '#000000',
+};
+
+const darkTheme = {
+  background: '#1a1a1a',
+  text: '#ffffff',
+};
+
+const App: React.FC = () => {
+  const [isDark, setIsDark] = React.useState(false);
+
   return (
-    <>
-      <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Header />
-        <Box sx={{ my: 8 }}>
-          <Projects />
-        </Box>
-      </Container>
-      <ContactSection />
-    </>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <GlobalStyles />
+      <Header />
+      <Home />
+      <Footer />
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

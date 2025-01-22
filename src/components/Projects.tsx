@@ -1,34 +1,42 @@
-import { Grid } from '@mui/material';
-import { Project } from '../model/Project';
-import { ProjectCard } from './ProjectCard';
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+}
 
-const projects: Project[] = [
-  {
-    id: 1,
-    type: 'Product Photography',
-    title: 'Paris secrets',
-    description: 'Sint occaecat mollit et nulla do occaecat ut nulla',
-    images: ['paris1.jpg', 'paris2.jpg'],
-  },
-  {
-    id: 2,
-    type: 'Landscape',
-    title: 'Fairy tales',
-    description: 'Sint occaecat mollit et nulla do occaecat ut nulla',
-    images: ['fairy1.jpg'],
-  },
-];
+const Projects: React.FC = () => {
+  const projects: Project[] = [
+    {
+      title: 'Habitual',
+      description: 'A habit tracker for your personal growth journey.',
+      image: '/images/habitual.png',
+    },
+    {
+      title: 'Oasis',
+      description: 'Curated playlists for every moment.',
+      image: '/images/oasis.png',
+    },
+    {
+      title: 'Liftoff',
+      description: 'A simple, beautiful, and powerful to-do list.',
+      image: '/images/liftoff.png',
+    },
+    {
+      title: 'Bloom',
+      description: 'A calming experience to write and reflect.',
+      image: '/images/bloom.png',
+    },
+  ];
 
-const Projects = () => {
   return (
-    <Grid container spacing={4}>
+    <div className="projects-grid">
       {projects.map((project, index) => (
-        <Grid item xs={12} md={6} key={project.id}>
-          <ProjectCard project={project} isEven={index % 2 === 0} />
-        </Grid>
+        <div key={index} className="project-card">
+          <img src={project.image} alt={project.title} />
+          <h3>{project.title}</h3>
+          <p>{project.description}</p>
+        </div>
       ))}
-    </Grid>
+    </div>
   );
 };
-
-export default Projects;

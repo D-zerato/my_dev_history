@@ -1,97 +1,65 @@
-import { Box, Card, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Modal from './Modal';
+import { ProjectDetail } from '../model/ProjectDetail';
 
 interface ProjectCardProps {
-  project: {
-    type: string;
-    title: string;
-    description: string;
-    images: string[];
-  };
-  isEven: boolean;
+  project: ProjectDetail;
 }
 
-export const ProjectCard = ({ project, isEven }: ProjectCardProps) => {
+const Card = styled.div`
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: white;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const ProjectImage = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+`;
+
+const ProjectInfo = styled.div`
+  padding: 1.5rem;
+`;
+
+const ProjectTitle = styled.h3`
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #333;
+`;
+
+const ProjectDescription = styled.p`
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+`;
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <Card
-      sx={{
-        padding: '2rem',
-        backgroundColor: isEven ? '#ffefef' : '#efefff',
-        boxShadow: 'none',
-        borderRadius: '10px',
-        transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-        '&:hover': {
-          transform: 'translateY(-8px)',
-          boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
-        },
-      }}
-    >
-      <Typography
-        variant="caption"
-        sx={{
-          color: 'text.secondary',
-          fontSize: '14px',
-          mb: 1,
-          display: 'block',
-        }}
-      >
-        {project.type}
-      </Typography>
+    <>
+      <Card onClick={() => setIsModalOpen(true)}>
+        <ProjectImage src={project.image} alt={project.title} />
+        <ProjectInfo>
+          <ProjectTitle>{project.title}</ProjectTitle>
+          <ProjectDescription>{project.description}</ProjectDescription>
+        </ProjectInfo>
+      </Card>
 
-      <Typography
-        variant="h2"
-        sx={{
-          fontSize: '24px',
-          fontWeight: 500,
-          mb: 2,
-        }}
-      >
-        {project.title}
-      </Typography>
-
-      <Typography
-        variant="body2"
-        sx={{
-          color: 'text.secondary',
-          mb: 3,
-        }}
-      >
-        {project.description}
-      </Typography>
-
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 2,
-          mb: 3,
-        }}
-      >
-        {project.images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`${project.title} ${index + 1}`}
-            style={{
-              width: '200px',
-              height: '250px',
-              objectFit: 'cover',
-            }}
-          />
-        ))}
-      </Box>
-
-      <Typography
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 1,
-          cursor: 'pointer',
-          '&:hover': {
-            opacity: 0.8,
-          },
-        }}
-      >
-        View project →
-      </Typography>
-    </Card>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} project={project} />
+    </>
   );
 };
+
+export default ProjectCard;
