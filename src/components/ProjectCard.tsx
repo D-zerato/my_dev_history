@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from './Modal';
 import { ProjectDetail } from '../model/ProjectDetail';
+import { useNavigate } from 'react-router-dom';
 
 interface ProjectCardProps {
   project: ProjectDetail;
@@ -46,10 +47,11 @@ const ProjectDescription = styled.p`
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
-      <Card onClick={() => setIsModalOpen(true)}>
+      <Card onClick={() => navigate('/detail')}>
         <ProjectImage src={project.image} alt={project.title} />
         <ProjectInfo>
           <ProjectTitle>{project.title}</ProjectTitle>
@@ -57,7 +59,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </ProjectInfo>
       </Card>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} project={project} />
+      {/*<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} project={project} />*/}
     </>
   );
 };

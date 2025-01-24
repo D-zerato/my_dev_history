@@ -4,6 +4,8 @@ import GlobalStyles from './styles/GlobalStyles';
 import { Header } from './components/Header';
 import Footer from './components/Footer';
 import { Home } from './components/Home';
+import ProjectDetail from './components/ProjectDetail';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const lightTheme = {
   background: '#ffffff',
@@ -22,7 +24,12 @@ const App: React.FC = () => {
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
       <Header />
-      <Home />
+      <BrowserRouter>
+        <Routes>
+          <Route path="*" element={<Home />} />
+          <Route path="detail" element={<ProjectDetail />} />
+        </Routes>
+      </BrowserRouter>
       <Footer />
     </ThemeProvider>
   );
