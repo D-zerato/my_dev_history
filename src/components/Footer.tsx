@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '../home/home.atom';
 
 const FooterContainer = styled.footer`
   display: flex;
@@ -21,9 +23,12 @@ const Copyright = styled.div`
 `;
 
 const Footer: React.FC = () => {
+  //
+  const user = useAtomValue(userAtom);
+
   return (
     <FooterContainer>
-      <Email>alexmartin@gmail.com</Email>
+      <Email>{user?.email || 'alexmartin@gmail.com'}</Email>
       <Copyright>Copyright 2023 Alex Martin. All rights reserved.</Copyright>
     </FooterContainer>
   );

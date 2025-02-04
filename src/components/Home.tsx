@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { SkillsSection } from './SkillSection';
 import SocialButton from './SocialButton';
 import ProjectsSection from './ProjectsSection';
 import IntroSection from './IntroSection';
+import { useParams } from 'react-router-dom';
+import { useFindEvent } from '../home/home.event';
+import { useAtom } from 'jotai';
+import { userAtom } from '../home/home.atom';
 
 const HomeContainer = styled.div`
   max-width: 1200px;
@@ -67,6 +71,18 @@ const BottomSection = styled.section`
 `;
 
 export const Home: React.FC = () => {
+  //
+  const params = useParams();
+  const [user, setUser] = useAtom(userAtom);
+  const { data: userData, isLoading } = useFindEvent(params?.id || '');
+
+  useEffect(() => {
+    //
+    if (userData && !isLoading) {
+      setUser(userData);
+    }
+  }, [userData, isLoading]);
+
   return (
     <HomeContainer>
       <TopSection>
@@ -76,8 +92,8 @@ export const Home: React.FC = () => {
             src={process.env.PUBLIC_URL + '/images/profileSample.png'}
             alt="Alex Martin"
           />
-          <Title>Alex Martin</Title>
-          <Subtitle>Front-end developer, designer, and maker.</Subtitle>
+          <Title>{user?.name || 'Alex Martin'}</Title>
+          <Subtitle>{user?.description || 'Front - end developer, designer, and maker.'}</Subtitle>
           <SocialButtons>
             <SocialButton href="https://github.com">GitHub</SocialButton>
             <SocialButton $primary href="https://linkedin.com">

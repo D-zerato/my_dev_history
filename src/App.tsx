@@ -18,14 +18,14 @@ const darkTheme = {
 };
 
 const App: React.FC = () => {
-  const [isDark, setIsDark] = React.useState(false);
-
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+    <ThemeProvider theme={lightTheme}>
       <GlobalStyles />
       <Header />
       <BrowserRouter>
         <Routes>
+          <Route path="/user/:id" element={<Home />} />
+          <Route path="/user/:id/:projectId" element={<ProjectDetail />} />
           <Route path="*" element={<Home />} />
           <Route path="detail" element={<ProjectDetail />} />
         </Routes>
