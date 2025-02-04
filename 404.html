@@ -2,12 +2,13 @@
 <html>
 <head>
     <script>
-        const segmentCount = 1; // 프로젝트명 이후 세그먼트 개수
-        const pathSegments = window.location.pathname.split('/');
-        const basePath = pathSegments.slice(0, segmentCount + 1).join('/');
+        const pathSegments = window.location.pathname
+            .split('/')
+            .filter(p => p !== 'my_dev_history');
+
         window.location.replace(
-            basePath + '/#/' +
-            encodeURIComponent(pathSegments.slice(segmentCount + 1).join('/'))
+            '/my_dev_history/#' +
+            encodeURIComponent(pathSegments.join('/'))
         );
     </script>
 </head>
