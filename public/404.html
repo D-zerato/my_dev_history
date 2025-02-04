@@ -2,15 +2,13 @@
 <html>
 <head>
     <script>
-        sessionStorage.redirect = window.location.href
-                .split('/')
-                .slice(0, 4)  // GitHub Pages 경로 구조 보정
-                .join('/') + '/?/' +
-            window.location.href
-                .split('/')
-                .slice(4)
-                .join('/');
-        window.location.replace(window.location.origin + '/my_dev_history/');
+        const segmentCount = 1; // 프로젝트명 이후 세그먼트 개수
+        const pathSegments = window.location.pathname.split('/');
+        const basePath = pathSegments.slice(0, segmentCount + 1).join('/');
+        window.location.replace(
+            basePath + '/#/' +
+            encodeURIComponent(pathSegments.slice(segmentCount + 1).join('/'))
+        );
     </script>
 </head>
 <body></body>

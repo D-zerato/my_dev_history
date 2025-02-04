@@ -5,7 +5,7 @@ import { Header } from './components/Header';
 import Footer from './components/Footer';
 import { Home } from './components/Home';
 import ProjectDetail from './components/ProjectDetail';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 
 const lightTheme = {
   background: '#ffffff',
@@ -22,13 +22,13 @@ const App: React.FC = () => {
     <ThemeProvider theme={lightTheme}>
       <GlobalStyles />
       <Header />
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <Router basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/:id" element={<Home />} />
           <Route path="/:id/:projectId" element={<ProjectDetail />} />
-          <Route path="*" element={<Home />} /> {/* 추가 */}
+          <Route path="*" element={<Home />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
       <Footer />
     </ThemeProvider>
   );
