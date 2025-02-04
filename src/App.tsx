@@ -22,7 +22,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={lightTheme}>
       <GlobalStyles />
       <Header />
-      <BrowserRouter basename="/my_dev_history">
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/user/:id" element={<Home />} />
           <Route path="/user/:id/:projectId" element={<ProjectDetail />} />
