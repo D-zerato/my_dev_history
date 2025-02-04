@@ -17,7 +17,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={lightTheme}>
       <GlobalStyles />
       <Header />
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter>
         <Routes>
           <Route index path="/" element={<Home />} />
           <Route index path="/home/:id" element={<Home />} />
