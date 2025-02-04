@@ -4,11 +4,14 @@
     <script>
         const pathSegments = window.location.pathname
             .split('/')
-            .filter(p => p !== 'my_dev_history');
+            .filter(segment => segment && segment !== 'my_dev_history');
+
+        const redirectPath = pathSegments.length > 0
+            ? `/#/${pathSegments.join('/')}`
+            : '';
 
         window.location.replace(
-            '/my_dev_history/#' +
-            encodeURIComponent(pathSegments.join('/'))
+            '/my_dev_history' + redirectPath + window.location.search + window.location.hash
         );
     </script>
 </head>
