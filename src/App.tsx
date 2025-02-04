@@ -24,8 +24,8 @@ const App: React.FC = () => {
       <Header />
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
-          <Route path="/user/:id" element={<Home />} />
-          <Route path="/user/:id/:projectId" element={<ProjectDetail />} />
+          <Route path="/:id" element={<Home />} />
+          <Route path="/:id/:projectId" element={<ProjectDetail />} />
           {/*<Route path="detail" element={<ProjectDetail />} />*/}
           {/*<Route path="*" element={<Home />} />*/}
         </Routes>
