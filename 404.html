@@ -2,19 +2,17 @@
 <html>
 <head>
     <script>
-        const segmentCount = 1; // 프로젝트명 이후 세그먼트 유지 개수
-        window.location.replace(
+        const segmentCount = 1; // 프로젝트명 이후 경로 세그먼트 수
+        const path = window.location.pathname
+            .split('/')
+            .slice(0, segmentCount + 1)
+            .join('/');
+
+        window.location.replace(path + '/?/' +
             window.location.pathname
                 .split('/')
-                .slice(0, segmentCount + 1)
-                .join('/') + '/?/' +
-            window.location.pathname
-                .slice(1)
-                .split('/')
-                .slice(segmentCount)
-                .join('/') +
-            window.location.search +
-            window.location.hash
+                .slice(segmentCount + 1)
+                .join('/')
         );
     </script>
 </head>
