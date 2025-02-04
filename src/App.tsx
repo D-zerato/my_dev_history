@@ -22,7 +22,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={lightTheme}>
       <GlobalStyles />
       <Header />
-      <BrowserRouter>
+      <BrowserRouter basename="/my_dev_history">
         <Routes>
           <Route path="/user/:id" element={<Home />} />
           <Route path="/user/:id/:projectId" element={<ProjectDetail />} />
