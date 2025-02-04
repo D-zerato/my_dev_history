@@ -19,6 +19,7 @@ const App: React.FC = () => {
       <Header />
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
+          <Route index path="/" element={<Home />} />
           <Route index path="/home/:id" element={<Home />} />
           <Route path="/project/:projectId" element={<ProjectDetail />} />
         </Routes>
