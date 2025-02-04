@@ -12,11 +12,6 @@ const lightTheme = {
   text: '#000000',
 };
 
-const darkTheme = {
-  background: '#1a1a1a',
-  text: '#ffffff',
-};
-
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={lightTheme}>
@@ -24,9 +19,8 @@ const App: React.FC = () => {
       <Header />
       <Router basename={process.env.PUBLIC_URL}>
         <Routes>
-          <Route path="/:id" element={<Home />} />
-          <Route path="/:id/:projectId" element={<ProjectDetail />} />
-          <Route path="*" element={<Home />} />
+          <Route index path="/home/:id" element={<Home />} />
+          <Route path="/project/:projectId" element={<ProjectDetail />} />
         </Routes>
       </Router>
       <Footer />

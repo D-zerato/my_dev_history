@@ -2,7 +2,7 @@
   "name": "my_dev_history",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://D-zerato.github.io/my_dev_history",
+  "homepage": "https://d-zerato.github.io/my_dev_history",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
