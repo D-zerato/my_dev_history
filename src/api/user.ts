@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://14.4.119.31:8081/api/users';
+const url = 'https://14.4.119.31:8081/api/users';
 
 export async function findUser(id: string) {
   //
