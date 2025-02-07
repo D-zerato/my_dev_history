@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { findUser } from '../api/user';
 import { ProjectQdo } from '../model/ProjectQdo';
-import { findProjects } from '../api/project';
+import { findProject, findProjects } from '../api/project';
 
 export function useFindEvent(id: string) {
   //
@@ -11,4 +11,9 @@ export function useFindEvent(id: string) {
 export function useFindProjects(qdo: ProjectQdo) {
   //
   return useQuery(['findProjects', qdo], () => findProjects(qdo), { enabled: qdo.userId !== '' });
+}
+
+export function useFindProject(id: string) {
+  //
+  return useQuery(['findProject', id], () => findProject(id), { enabled: id !== '' });
 }

@@ -12,3 +12,11 @@ export async function findProjects(qdo: ProjectQdo): Promise<ListResultModel<Pro
     .then((response) => response.data)
     .catch(console.error);
 }
+
+export async function findProject(id: string): Promise<ProjectDetail> {
+  //
+  return await axios
+    .get(`${url}/${id}`)
+    .then((response) => response.data)
+    .catch(console.error);
+}

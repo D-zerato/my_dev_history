@@ -3,6 +3,7 @@ export interface ProjectDetail {
   userId: number;
   name: string;
   description?: string;
+  personnel?: number;
   startDate?: Date;
   endDate?: Date;
   thumbnailUrl?: string;

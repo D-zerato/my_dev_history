@@ -1,10 +1,7 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
-import { projectQdoAtom, projectsAtom, userAtom } from '../home/home.atom';
-import { useAtom, useSetAtom } from 'jotai/index';
-import { useFindEvent, useFindProjects } from '../home/home.event';
+import { useFindProject } from '../home/home.event';
 import dayjs from 'dayjs';
 
 const Container = styled.div`
@@ -62,7 +59,7 @@ const TechStack = styled.div`
   margin: 1rem 0;
 `;
 
-const TechTag = styled.span`
+const BlockTag = styled.span`
   background-color: #f5f5f5;
   padding: 8px 12px;
   border-radius: 6px;
@@ -92,44 +89,7 @@ const ProjectDetail: React.FC = () => {
   //
   const params = useParams();
 
-  const projects = useAtomValue(projectsAtom);
-
-  const setUser = useSetAtom(userAtom);
-  const [qdo, setQdo] = useAtom(projectQdoAtom);
-  const { data: userData, isLoading: userLoading } = useFindEvent(params?.id || '');
-
-  const setProjects = useSetAtom(projectsAtom);
-  const { data: projectListResult, isLoading: projectLoading } = useFindProjects(qdo);
-
-  useEffect(() => {
-    //
-    if (userData && !userLoading) {
-      setUser(userData);
-    }
-  }, [userData, userLoading]);
-
-  useEffect(() => {
-    //
-    if (params?.id !== '' && params?.id !== undefined) {
-      setQdo({ ...qdo, userId: params?.id });
-    }
-  }, [params]);
-
-  useEffect(() => {
-    //
-    if (projectListResult && !projectLoading) {
-      setProjects(projectListResult.content);
-    }
-  }, [projectListResult, projectLoading]);
-
-  const project = useMemo(() => {
-    //
-    if (!projects || !projects.length || !params?.projectId) return undefined;
-
-    return projects.find((data) => data.id === Number(params?.projectId));
-  }, [projects]);
-
-  console.log(project);
+  const { data: project, isLoading } = useFindProject(params?.projectId || '');
 
   return (
     <Container>
@@ -149,6 +109,8 @@ const ProjectDetail: React.FC = () => {
         <span>
           {project && dayjs(project.endDate).diff(dayjs(project.startDate), 'month')} month
         </span>
+        <span>•</span>
+        <span>{project?.personnel}명</span>
       </ProjectMeta>
 
       <ProjectSection>
@@ -157,8 +119,15 @@ const ProjectDetail: React.FC = () => {
       </ProjectSection>
 
       <ProjectSection>
+        <SectionTitle>Type</SectionTitle>
+        <TechStack>
+          {project?.projectTypes?.map((type) => <BlockTag>{type.name}</BlockTag>)}
+        </TechStack>
+      </ProjectSection>
+
+      <ProjectSection>
         <SectionTitle>Technologies</SectionTitle>
-        <TechStack>{project?.techs?.map((tech) => <TechTag>{tech.name}</TechTag>)}</TechStack>
+        <TechStack>{project?.techs?.map((tech) => <BlockTag>{tech.name}</BlockTag>)}</TechStack>
       </ProjectSection>
 
       {/*<ProjectSection>*/}
