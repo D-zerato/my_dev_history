@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useFindProject } from '../home/home.event';
 import dayjs from 'dayjs';
+import { stringify } from 'node:querystring';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -18,14 +19,14 @@ const ImageGallery = styled.div`
 
   img {
     width: 100%;
-    height: 200px;
+    max-height: 500px;
     object-fit: cover;
     border-radius: 8px;
   }
 `;
 
 const ProjectTitle = styled.h1`
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 600;
   color: #1a1a1a;
   margin-bottom: 0.5rem;
@@ -52,7 +53,7 @@ const SectionTitle = styled.h2`
   letter-spacing: -0.5px; // 글자 간격 조정
 `;
 
-const TechStack = styled.div`
+const BlockStack = styled.div`
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
@@ -93,10 +94,6 @@ const ProjectDetail: React.FC = () => {
 
   return (
     <Container>
-      <ImageGallery>
-        <img src={project?.thumbnailUrl} alt={project?.name} />
-      </ImageGallery>
-
       <ProjectTitle>{project?.name}</ProjectTitle>
       <ProjectMeta>
         <span>Personal project</span>
@@ -116,19 +113,61 @@ const ProjectDetail: React.FC = () => {
       <ProjectSection>
         <SectionTitle>Description</SectionTitle>
         <p>{project?.description}</p>
+        <br />
+        <ImageGallery>
+          {project?.projectImages?.map((img, index) => <img src={img.imageUrl} />)}
+        </ImageGallery>
       </ProjectSection>
 
       <ProjectSection>
         <SectionTitle>Type</SectionTitle>
-        <TechStack>
+        <BlockStack>
           {project?.projectTypes?.map((type) => <BlockTag>{type.name}</BlockTag>)}
-        </TechStack>
+        </BlockStack>
       </ProjectSection>
 
       <ProjectSection>
         <SectionTitle>Technologies</SectionTitle>
-        <TechStack>{project?.techs?.map((tech) => <BlockTag>{tech.name}</BlockTag>)}</TechStack>
+        <BlockStack>{project?.techs?.map((tech) => <BlockTag>{tech.name}</BlockTag>)}</BlockStack>
       </ProjectSection>
+
+      <ProjectSection>
+        <SectionTitle>Task Histories</SectionTitle>
+        {project?.projectTaskHistories
+          ?.sort((l, r) => l.orderIndex - r.orderIndex)
+          .map((hisory) => (
+            <>
+              <p>{hisory.content}</p>
+              <br />
+            </>
+          ))}
+      </ProjectSection>
+
+      <ProjectSection>
+        <SectionTitle>Performances</SectionTitle>
+        {project?.projectPerformances
+          ?.sort((l, r) => l.orderIndex - r.orderIndex)
+          .map((performance) => (
+            <>
+              <p>{performance.content}</p>
+              <br />
+            </>
+          ))}
+      </ProjectSection>
+
+      {project?.projectTroubleshootings && (
+        <ProjectSection>
+          <SectionTitle>Troubleshootings</SectionTitle>
+          {project.projectTroubleshootings
+            .sort((l, r) => l.orderIndex - r.orderIndex)
+            .map((trouble) => (
+              <>
+                <p>{trouble.content}</p>
+                <br />
+              </>
+            ))}
+        </ProjectSection>
+      )}
 
       {/*<ProjectSection>*/}
       {/*  <SectionTitle>Role</SectionTitle>*/}

@@ -72,15 +72,15 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, project }) => {
   return (
     <ModalOverlay isOpen={isOpen} onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={onClose}>&times;</CloseButton>
-        <h2>{project.name}</h2>
-        <ProjectImage src={project.thumbnailUrl} alt={project.name} />
+        {/*  <CloseButton onClick={onClose}>&times;</CloseButton>*/}
+        {/*  <h2>{project.name}</h2>*/}
+        {/*  <ProjectImage src={project.thumbnailUrl} alt={project.name} />*/}
 
-        <TechStack>
-          {project.techs.map((tech, index) => (
-            <TechTag key={index}>{tech.name}</TechTag>
-          ))}
-        </TechStack>
+        {/*  <TechStack>*/}
+        {/*    {project.techs.map((tech, index) => (*/}
+        {/*      <TechTag key={index}>{tech.name}</TechTag>*/}
+        {/*    ))}*/}
+        {/*  </TechStack>*/}
 
         <p>{project.description}</p>
 

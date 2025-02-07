@@ -5,6 +5,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { projectQdoAtom, projectsAtom } from '../home/home.atom';
 import { ProjectDetail } from '../model/ProjectDetail';
 import { useFindProjects } from '../home/home.event';
+import { ProjectSimpleModel } from '../model/ProjectSimpleModel';
 
 const ProjectsGrid = styled.div`
   display: grid;
@@ -28,7 +29,9 @@ const ProjectsSection: React.FC = () => {
 
   return (
     <ProjectsGrid>
-      {projects?.map((project: ProjectDetail, index: any) => <ProjectCard project={project} />)}
+      {projects?.map((project: ProjectSimpleModel, index: any) => (
+        <ProjectCard project={project} />
+      ))}
     </ProjectsGrid>
   );
 };

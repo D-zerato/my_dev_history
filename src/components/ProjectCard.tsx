@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ProjectDetail } from '../model/ProjectDetail';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ProjectSimpleModel } from '../model/ProjectSimpleModel';
 
 const Card = styled.div`
   border-radius: 12px;
@@ -40,7 +41,7 @@ const ProjectDescription = styled.p`
   font-size: 0.9rem;
 `;
 
-const ProjectCard = ({ project }: { project: ProjectDetail }) => {
+const ProjectCard = ({ project }: { project: ProjectSimpleModel }) => {
   //
   const params = useParams();
   // const [isModalOpen, setIsModalOpen] = useState(false);
