@@ -5,9 +5,10 @@ import SocialButton from './SocialButton';
 import ProjectsSection from './ProjectsSection';
 import IntroSection from './IntroSection';
 import { useParams } from 'react-router-dom';
-import { useFindEvent } from '../home/home.event';
+import { useFindEvent, useFindProjects } from '../home/home.event';
 import { useAtom } from 'jotai';
-import { projectQdoAtom, userAtom } from '../home/home.atom';
+import { projectQdoAtom, projectsAtom, userAtom } from '../home/home.atom';
+import { useAtomValue, useSetAtom } from 'jotai/index';
 
 const HomeContainer = styled.div`
   max-width: 1200px;
@@ -72,17 +73,22 @@ const BottomSection = styled.section`
 
 export const Home: React.FC = () => {
   //
+  const user = useAtomValue(userAtom);
+
   const params = useParams();
-  const [user, setUser] = useAtom(userAtom);
+  const setUser = useSetAtom(userAtom);
   const [qdo, setQdo] = useAtom(projectQdoAtom);
-  const { data: userData, isLoading } = useFindEvent(params?.id || '');
+  const { data: userData, isLoading: userLoading } = useFindEvent(params?.id || '');
+
+  const setProjects = useSetAtom(projectsAtom);
+  const { data: projectListResult, isLoading: porjectListResultLoading } = useFindProjects(qdo);
 
   useEffect(() => {
     //
-    if (userData && !isLoading) {
+    if (userData && !userLoading) {
       setUser(userData);
     }
-  }, [userData, isLoading]);
+  }, [userData, userLoading]);
 
   useEffect(() => {
     //
@@ -90,6 +96,13 @@ export const Home: React.FC = () => {
       setQdo({ ...qdo, userId: params?.id });
     }
   }, [params]);
+
+  useEffect(() => {
+    //
+    if (projectListResult && !porjectListResultLoading) {
+      setProjects(projectListResult.content);
+    }
+  }, [projectListResult, porjectListResultLoading]);
 
   return (
     <HomeContainer>

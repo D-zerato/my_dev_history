@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useAtom, useSetAtom } from 'jotai';
+import { projectQdoAtom, projectsAtom, userAtom } from '../home/home.atom';
+import { useFindEvent, useFindProjects } from '../home/home.event';
+import { useAtomValue } from 'jotai/index';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -45,6 +50,7 @@ const ProfileImage = styled.img`
 `;
 
 export const Header: React.FC = () => {
+  //
   return (
     <HeaderContainer>
       <Logo>MyDevHistory</Logo>

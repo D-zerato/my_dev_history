@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import ProjectCard from './ProjectCard';
-import { useAtom } from 'jotai';
-import { projectQdoAtom } from '../home/home.atom';
+import { useAtom, useAtomValue } from 'jotai';
+import { projectQdoAtom, projectsAtom } from '../home/home.atom';
 import { ProjectDetail } from '../model/ProjectDetail';
 import { useFindProjects } from '../home/home.event';
 
@@ -15,16 +15,20 @@ const ProjectsGrid = styled.div`
 
 const ProjectsSection: React.FC = () => {
   //
-  const [qdo, setQdo] = useAtom(projectQdoAtom);
-  const { data } = useFindProjects(qdo);
+  const qdo = useAtomValue(projectQdoAtom);
+  const [projects, setProjects] = useAtom(projectsAtom);
+  const { data: projectListResult, isLoading } = useFindProjects(qdo);
 
-  console.dir(data);
+  useEffect(() => {
+    //
+    if (projectListResult && !isLoading) {
+      setProjects(projectListResult.content);
+    }
+  }, [projectListResult, isLoading]);
 
   return (
     <ProjectsGrid>
-      {data?.content?.map((project: ProjectDetail, index: any) => (
-        <ProjectCard project={project} />
-      ))}
+      {projects?.map((project: ProjectDetail, index: any) => <ProjectCard project={project} />)}
     </ProjectsGrid>
   );
 };

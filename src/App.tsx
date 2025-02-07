@@ -13,6 +13,7 @@ const lightTheme = {
 };
 
 const App: React.FC = () => {
+  //
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyles />

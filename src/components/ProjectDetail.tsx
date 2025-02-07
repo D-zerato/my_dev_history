@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
+import { projectQdoAtom, projectsAtom, userAtom } from '../home/home.atom';
+import { useAtom, useSetAtom } from 'jotai/index';
+import { useFindEvent, useFindProjects } from '../home/home.event';
+import dayjs from 'dayjs';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -83,89 +89,196 @@ const DemoImage = styled.img`
 `;
 
 const ProjectDetail: React.FC = () => {
+  //
+  const params = useParams();
+
+  const projects = useAtomValue(projectsAtom);
+
+  const setUser = useSetAtom(userAtom);
+  const [qdo, setQdo] = useAtom(projectQdoAtom);
+  const { data: userData, isLoading: userLoading } = useFindEvent(params?.id || '');
+
+  const setProjects = useSetAtom(projectsAtom);
+  const { data: projectListResult, isLoading: projectLoading } = useFindProjects(qdo);
+
+  useEffect(() => {
+    //
+    if (userData && !userLoading) {
+      setUser(userData);
+    }
+  }, [userData, userLoading]);
+
+  useEffect(() => {
+    //
+    if (params?.id !== '' && params?.id !== undefined) {
+      setQdo({ ...qdo, userId: params?.id });
+    }
+  }, [params]);
+
+  useEffect(() => {
+    //
+    if (projectListResult && !projectLoading) {
+      setProjects(projectListResult.content);
+    }
+  }, [projectListResult, projectLoading]);
+
+  const project = useMemo(() => {
+    //
+    if (!projects || !projects.length || !params?.projectId) return undefined;
+
+    return projects.find((data) => data.id === Number(params?.projectId));
+  }, [projects]);
+
+  console.log(project);
+
   return (
     <Container>
       <ImageGallery>
-        <img
-          src={process.env.PUBLIC_URL + '/images/ProjectFrontSample.png'}
-          alt="Project image 1"
-        />
-        <img
-          src={process.env.PUBLIC_URL + '/images/ProjectFrontSample.png'}
-          alt="Project image 2"
-        />
-        <img
-          src={process.env.PUBLIC_URL + '/images/ProjectFrontSample.png'}
-          alt="Project image 3"
-        />
+        <img src={project?.thumbnailUrl} alt={project?.name} />
       </ImageGallery>
 
-      <ProjectTitle>Project 1: Design System</ProjectTitle>
+      <ProjectTitle>{project?.name}</ProjectTitle>
       <ProjectMeta>
         <span>Personal project</span>
         <span>•</span>
-        <span>Nov 2022 - Nov 2022</span>
+        <span>
+          {project &&
+            `${dayjs(project.startDate).format('MMM YYYY')} - ${dayjs(project.endDate).format('MMM YYYY')}`}
+        </span>
         <span>•</span>
-        <span>1 month</span>
+        <span>
+          {project && dayjs(project.endDate).diff(dayjs(project.startDate), 'month')} month
+        </span>
       </ProjectMeta>
 
       <ProjectSection>
         <SectionTitle>Description</SectionTitle>
-        <p>
-          I developed a design system for a hypothetical mobile app. The system is built with React
-          and TypeScript and includes components like buttons, input fields, and modals.
-        </p>
+        <p>{project?.description}</p>
       </ProjectSection>
 
       <ProjectSection>
         <SectionTitle>Technologies</SectionTitle>
-        <TechStack>
-          <TechTag>React</TechTag>
-          <TechTag>TypeScript</TechTag>
-          <TechTag>Storybook</TechTag>
-          <TechTag>TailwindCSS</TechTag>
-          <TechTag>Figma</TechTag>
-          <TechTag>Jest</TechTag>
-          <TechTag>React Testing Library</TechTag>
-          <TechTag>Git</TechTag>
-        </TechStack>
+        <TechStack>{project?.techs?.map((tech) => <TechTag>{tech.name}</TechTag>)}</TechStack>
       </ProjectSection>
 
-      <ProjectSection>
-        <SectionTitle>Role</SectionTitle>
-        <Role>
-          <span>🔧 Front-end Developer</span>
-        </Role>
-      </ProjectSection>
+      {/*<ProjectSection>*/}
+      {/*  <SectionTitle>Role</SectionTitle>*/}
+      {/*  <Role>*/}
+      {/*    <span>🔧 Front-end Developer</span>*/}
+      {/*  </Role>*/}
+      {/*</ProjectSection>*/}
+      {/*<ProjectSection>*/}
+      {/*  <SectionTitle>Design System</SectionTitle>*/}
+      {/*  <p>*/}
+      {/*    The design system includes a set of reusable components such as buttons, inputs, and*/}
+      {/*    modals. I used Storybook to document these components and TailwindCSS to style them. The*/}
+      {/*    system is built with React and TypeScript, and I wrote unit tests for the components using*/}
+      {/*    Jest and React Testing Library.*/}
+      {/*  </p>*/}
+      {/*</ProjectSection>*/}
 
-      <ProjectSection>
-        <SectionTitle>Design System</SectionTitle>
-        <p>
-          The design system includes a set of reusable components such as buttons, inputs, and
-          modals. I used Storybook to document these components and TailwindCSS to style them. The
-          system is built with React and TypeScript, and I wrote unit tests for the components using
-          Jest and React Testing Library.
-        </p>
-      </ProjectSection>
+      {/*<ProjectSection>*/}
+      {/*  <SectionTitle>Demo</SectionTitle>*/}
+      {/*  <DemoImage*/}
+      {/*    src={process.env.PUBLIC_URL + '/images/ProjectContentsSample.png'}*/}
+      {/*    alt="Project Demo"*/}
+      {/*  />*/}
+      {/*</ProjectSection>*/}
 
-      <ProjectSection>
-        <SectionTitle>Demo</SectionTitle>
-        <DemoImage
-          src={process.env.PUBLIC_URL + '/images/ProjectContentsSample.png'}
-          alt="Project Demo"
-        />
-      </ProjectSection>
-
-      <ProjectSection>
-        <SectionTitle>Next Steps</SectionTitle>
-        <p>
-          In the future, I'd like to expand the design system to include more complex components,
-          such as data tables and charts. I also want to add accessibility features to ensure that
-          the components are usable by a wide range of users.
-        </p>
-      </ProjectSection>
+      {/*<ProjectSection>*/}
+      {/*  <SectionTitle>Next Steps</SectionTitle>*/}
+      {/*  <p>*/}
+      {/*    In the future, I'd like to expand the design system to include more complex components,*/}
+      {/*    such as data tables and charts. I also want to add accessibility features to ensure that*/}
+      {/*    the components are usable by a wide range of users.*/}
+      {/*  </p>*/}
+      {/*</ProjectSection>*/}
     </Container>
   );
+
+  // return (
+  //   <Container>
+  //     <ImageGallery>
+  //       <img
+  //         src={process.env.PUBLIC_URL + '/images/ProjectFrontSample.png'}
+  //         alt="Project image 1"
+  //       />
+  //       <img
+  //         src={process.env.PUBLIC_URL + '/images/ProjectFrontSample.png'}
+  //         alt="Project image 2"
+  //       />
+  //       <img
+  //         src={process.env.PUBLIC_URL + '/images/ProjectFrontSample.png'}
+  //         alt="Project image 3"
+  //       />
+  //     </ImageGallery>
+  //
+  //     <ProjectTitle>Project 1: Design System</ProjectTitle>
+  //     <ProjectMeta>
+  //       <span>Personal project</span>
+  //       <span>•</span>
+  //       <span>Nov 2022 - Nov 2022</span>
+  //       <span>•</span>
+  //       <span>1 month</span>
+  //     </ProjectMeta>
+  //
+  //     <ProjectSection>
+  //       <SectionTitle>Description</SectionTitle>
+  //       <p>
+  //         I developed a design system for a hypothetical mobile app. The system is built with React
+  //         and TypeScript and includes components like buttons, input fields, and modals.
+  //       </p>
+  //     </ProjectSection>
+  //
+  //     <ProjectSection>
+  //       <SectionTitle>Technologies</SectionTitle>
+  //       <TechStack>
+  //         <TechTag>React</TechTag>
+  //         <TechTag>TypeScript</TechTag>
+  //         <TechTag>Storybook</TechTag>
+  //         <TechTag>TailwindCSS</TechTag>
+  //         <TechTag>Figma</TechTag>
+  //         <TechTag>Jest</TechTag>
+  //         <TechTag>React Testing Library</TechTag>
+  //         <TechTag>Git</TechTag>
+  //       </TechStack>
+  //     </ProjectSection>
+  //
+  //     <ProjectSection>
+  //       <SectionTitle>Role</SectionTitle>
+  //       <Role>
+  //         <span>🔧 Front-end Developer</span>
+  //       </Role>
+  //     </ProjectSection>
+  //
+  //     <ProjectSection>
+  //       <SectionTitle>Design System</SectionTitle>
+  //       <p>
+  //         The design system includes a set of reusable components such as buttons, inputs, and
+  //         modals. I used Storybook to document these components and TailwindCSS to style them. The
+  //         system is built with React and TypeScript, and I wrote unit tests for the components using
+  //         Jest and React Testing Library.
+  //       </p>
+  //     </ProjectSection>
+  //
+  //     <ProjectSection>
+  //       <SectionTitle>Demo</SectionTitle>
+  //       <DemoImage
+  //         src={process.env.PUBLIC_URL + '/images/ProjectContentsSample.png'}
+  //         alt="Project Demo"
+  //       />
+  //     </ProjectSection>
+  //
+  //     <ProjectSection>
+  //       <SectionTitle>Next Steps</SectionTitle>
+  //       <p>
+  //         In the future, I'd like to expand the design system to include more complex components,
+  //         such as data tables and charts. I also want to add accessibility features to ensure that
+  //         the components are usable by a wide range of users.
+  //       </p>
+  //     </ProjectSection>
+  //   </Container>
+  // );
 };
 
 export default ProjectDetail;

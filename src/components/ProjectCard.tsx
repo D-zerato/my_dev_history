@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ProjectDetail } from '../model/ProjectDetail';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Card = styled.div`
   border-radius: 12px;
@@ -42,12 +42,13 @@ const ProjectDescription = styled.p`
 
 const ProjectCard = ({ project }: { project: ProjectDetail }) => {
   //
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const params = useParams();
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   return (
     <>
-      <Card onClick={() => navigate('/detail')}>
+      <Card onClick={() => navigate(`/project/${params?.id}/${project.id}`)}>
         <ProjectImage src={project.thumbnailUrl} alt={project.name} />
         <ProjectInfo>
           <ProjectTitle>{project.name}</ProjectTitle>
