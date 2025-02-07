@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Modal from './Modal';
 import { ProjectDetail } from '../model/ProjectDetail';
 import { useNavigate } from 'react-router-dom';
-
-interface ProjectCardProps {
-  project: ProjectDetail;
-}
 
 const Card = styled.div`
   border-radius: 12px;
@@ -45,16 +40,17 @@ const ProjectDescription = styled.p`
   font-size: 0.9rem;
 `;
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const ProjectCard = ({ project }: { project: ProjectDetail }) => {
+  //
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   return (
     <>
       <Card onClick={() => navigate('/detail')}>
-        <ProjectImage src={project.image} alt={project.title} />
+        <ProjectImage src={project.thumbnailUrl} alt={project.name} />
         <ProjectInfo>
-          <ProjectTitle>{project.title}</ProjectTitle>
+          <ProjectTitle>{project.name}</ProjectTitle>
           <ProjectDescription>{project.description}</ProjectDescription>
         </ProjectInfo>
       </Card>

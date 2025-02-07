@@ -7,7 +7,7 @@ import IntroSection from './IntroSection';
 import { useParams } from 'react-router-dom';
 import { useFindEvent } from '../home/home.event';
 import { useAtom } from 'jotai';
-import { userAtom } from '../home/home.atom';
+import { projectQdoAtom, userAtom } from '../home/home.atom';
 
 const HomeContainer = styled.div`
   max-width: 1200px;
@@ -74,6 +74,7 @@ export const Home: React.FC = () => {
   //
   const params = useParams();
   const [user, setUser] = useAtom(userAtom);
+  const [qdo, setQdo] = useAtom(projectQdoAtom);
   const { data: userData, isLoading } = useFindEvent(params?.id || '');
 
   useEffect(() => {
@@ -82,6 +83,13 @@ export const Home: React.FC = () => {
       setUser(userData);
     }
   }, [userData, isLoading]);
+
+  useEffect(() => {
+    //
+    if (params?.id !== '' && params?.id !== undefined) {
+      setQdo({ ...qdo, userId: params?.id });
+    }
+  }, [params]);
 
   return (
     <HomeContainer>

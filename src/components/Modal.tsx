@@ -73,50 +73,50 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, project }) => {
     <ModalOverlay isOpen={isOpen} onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <CloseButton onClick={onClose}>&times;</CloseButton>
-        <h2>{project.title}</h2>
-        <ProjectImage src={project.image} alt={project.title} />
+        <h2>{project.name}</h2>
+        <ProjectImage src={project.thumbnailUrl} alt={project.name} />
 
         <TechStack>
-          {project.techStack.map((tech, index) => (
-            <TechTag key={index}>{tech}</TechTag>
+          {project.techs.map((tech, index) => (
+            <TechTag key={index}>{tech.name}</TechTag>
           ))}
         </TechStack>
 
         <p>{project.description}</p>
 
-        <Section>
-          <h3>Work Details</h3>
-          {project.workDetails.tasks.map((task, index) => (
-            <div key={index}>
-              <h4>{task.title}</h4>
-              <p>{task.description}</p>
-            </div>
-          ))}
-        </Section>
+        {/*<Section>*/}
+        {/*  <h3>Work Details</h3>*/}
+        {/*  {project.workDetails.tasks.map((task, index) => (*/}
+        {/*    <div key={index}>*/}
+        {/*      <h4>{task.title}</h4>*/}
+        {/*      <p>{task.description}</p>*/}
+        {/*    </div>*/}
+        {/*  ))}*/}
+        {/*</Section>*/}
 
-        <Section>
-          <h3>Achievements</h3>
-          {project.achievements.map((achievement, index) => (
-            <div key={index}>
-              <h4>{achievement.title}</h4>
-              <p>{achievement.description}</p>
-            </div>
-          ))}
-        </Section>
+        {/*<Section>*/}
+        {/*  <h3>Achievements</h3>*/}
+        {/*  {project.achievements.map((achievement, index) => (*/}
+        {/*    <div key={index}>*/}
+        {/*      <h4>{achievement.title}</h4>*/}
+        {/*      <p>{achievement.description}</p>*/}
+        {/*    </div>*/}
+        {/*  ))}*/}
+        {/*</Section>*/}
 
-        <Section>
-          <h3>Issues & Solutions</h3>
-          {project.issues.map((issue, index) => (
-            <div key={index}>
-              <h4>Problem {index + 1}</h4>
-              <p>{issue.problem}</p>
-              <h4>Solution</h4>
-              <p>{issue.solution}</p>
-              <h4>Review</h4>
-              <p>{issue.review}</p>
-            </div>
-          ))}
-        </Section>
+        {/*<Section>*/}
+        {/*  <h3>Issues & Solutions</h3>*/}
+        {/*  {project.issues.map((issue, index) => (*/}
+        {/*    <div key={index}>*/}
+        {/*      <h4>Problem {index + 1}</h4>*/}
+        {/*      <p>{issue.problem}</p>*/}
+        {/*      <h4>Solution</h4>*/}
+        {/*      <p>{issue.solution}</p>*/}
+        {/*      <h4>Review</h4>*/}
+        {/*      <p>{issue.review}</p>*/}
+        {/*    </div>*/}
+        {/*  ))}*/}
+        {/*</Section>*/}
       </ModalContent>
     </ModalOverlay>
   );

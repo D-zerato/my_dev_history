@@ -1,15 +1,11 @@
 export interface ProjectDetail {
-  title: string;
-  description: string;
-  image: string;
-  techStack: string[];
-  workDetails: {
-    tasks: Array<{ title: string; description: string }>;
-  };
-  achievements: Array<{ title: string; description: string }>;
-  issues: Array<{
-    problem: string;
-    solution: string;
-    review: string;
-  }>;
+  id: number;
+  userId: number;
+  name: string;
+  description?: string;
+  startDate?: Date;
+  endDate?: Date;
+  thumbnailUrl?: string;
+  projectTypes: { id: number; name: string }[];
+  techs: { id: number; name: string }[];
 }

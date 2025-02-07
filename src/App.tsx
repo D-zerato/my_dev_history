@@ -21,7 +21,7 @@ const App: React.FC = () => {
         <Routes>
           <Route index path="/" element={<Home />} />
           <Route index path="/home/:id" element={<Home />} />
-          <Route path="/project/:projectId" element={<ProjectDetail />} />
+          <Route path="/project/:id/:projectId" element={<ProjectDetail />} />
         </Routes>
       </BrowserRouter>
       <Footer />
