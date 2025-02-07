@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import ProjectCard from './ProjectCard';
 import { useAtom } from 'jotai';
 import { projectQdoAtom } from '../home/home.atom';
-import { useFindProjects } from '../home/home.event';
 import { ProjectDetail } from '../model/ProjectDetail';
+import { useFindProjects } from '../home/home.event';
 
 const ProjectsGrid = styled.div`
   display: grid;
@@ -16,11 +16,13 @@ const ProjectsGrid = styled.div`
 const ProjectsSection: React.FC = () => {
   //
   const [qdo, setQdo] = useAtom(projectQdoAtom);
-  const { data: projectDetail, isLoading } = useFindProjects(qdo);
+  const { data } = useFindProjects(qdo);
+
+  console.dir(data);
 
   return (
     <ProjectsGrid>
-      {projectDetail?.map((project: ProjectDetail, index: any) => (
+      {data?.content?.map((project: ProjectDetail, index: any) => (
         <ProjectCard project={project} />
       ))}
     </ProjectsGrid>
