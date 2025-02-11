@@ -11,7 +11,6 @@ const App = () => {
       <Routes>
         <Route path="/:id" element={<Layout />}>
           <Route path="/:id" element={<Navigate to="projects" replace />} />
-          <Route index element={<Navigate to="projects" replace />} />
           <Route path="projects" element={<Projects />} />
           <Route path="career" element={<Career />} />
           <Route path="about" element={<About />} />
