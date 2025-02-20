@@ -55,9 +55,6 @@ const Projects = () => {
 
   return (
     <TabPanel>
-      <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: '32px' }}>
-        프로젝트
-      </Typography>
       <ProjectContainer>
         {projects.map((project, index) => (
           <ProjectCard key={index} onClick={() => navigate(`${project.id}`)}>
