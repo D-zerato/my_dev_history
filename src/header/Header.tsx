@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { AppBar, Tabs, Tab, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import { useFindUser } from './header.event';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useFindUser, useFindUserDetail } from './header.event';
 import { useAtom, useSetAtom } from 'jotai';
 import { UserAtom } from './header.atom';
 import { ProjectQdoAtom } from '../page/project/project.atom';
@@ -19,6 +19,8 @@ const Title = styled(Typography)({
   fontSize: '48px',
   fontWeight: 'bold',
   marginBottom: '8px',
+  color: '#fff',
+  cursor: 'pointer', // 마우스 커서를 포인터로 변경
 });
 
 const StyledTabs = styled(Tabs)({
@@ -48,8 +50,9 @@ const LinkTab = React.forwardRef<HTMLAnchorElement, { label: string; to: string 
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { id } = useParams<{ id?: string }>();
-  const { data: userData, isLoading: isUserDataLoading } = useFindUser(id || '');
+  const { data: userData, isLoading: isUserDataLoading } = useFindUserDetail(id || '');
   const setUser = useSetAtom(UserAtom);
   const [projectQdo, setProjectQdo] = useAtom(ProjectQdoAtom);
 
@@ -61,7 +64,7 @@ const Header = () => {
   }, [userData, isUserDataLoading, setUser, id, setProjectQdo]);
 
   const getValueFromPath = () => {
-    if (location.pathname.endsWith('/projects')) return 0;
+    if (location.pathname.includes('/projects')) return 0;
     if (location.pathname.endsWith('/career')) return 1;
     if (location.pathname.endsWith('/about')) return 2;
     return false;
@@ -79,7 +82,7 @@ const Header = () => {
 
   return (
     <StyledAppBar position="static">
-      <Title>MyDevHistory</Title>
+      <Title onClick={() => navigate(`/${id}/projects`)}>MyDevHistory</Title>
       <StyledTabs
         value={value}
         onChange={handleChange}

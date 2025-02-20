@@ -1,8 +1,13 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 import TabPanel from '../shared/components/TabPanel';
+import { useAtomValue } from 'jotai';
+import { UserAtom } from '../header/header.atom';
 
 const Career = () => {
+  //
+  const user = useAtomValue(UserAtom);
+
   return (
     <TabPanel>
       <Typography variant="h5" sx={{ marginBottom: '16px' }}>

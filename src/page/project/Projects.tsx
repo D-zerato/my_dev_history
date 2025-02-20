@@ -3,9 +3,9 @@ import { Typography, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import TabPanel from '../../shared/components/TabPanel';
 import { useAtomValue } from 'jotai';
-import { UserAtom } from '../../header/header.atom';
 import { ProjectQdoAtom } from './project.atom';
 import { useFindProjects } from './project.event';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // 스타일 정의
 const ProjectContainer = styled(Box)({
@@ -22,6 +22,12 @@ const ProjectCard = styled(Box)({
   textAlign: 'center',
   color: '#fff',
   marginBottom: '32px', // 카드 아래 여백
+  transition: 'transform 0.3s ease, box-shadow 0.3s ease', // 애니메이션 추가
+  '&:hover': {
+    transform: 'scale(1.05)', // 마우스 오버 시 확대 효과
+    boxShadow: '0px 4px 20px rgba(255, 255, 255, 0.3)', // 그림자 효과 추가
+    cursor: 'pointer', // 마우스 커서 변경
+  },
 });
 
 const ProjectImage = styled('img')({
@@ -32,8 +38,9 @@ const ProjectImage = styled('img')({
 });
 
 const Projects = () => {
-  // 샘플 프로젝트 데이터
-  const user = useAtomValue(UserAtom);
+  //
+  const navigate = useNavigate();
+
   const projectQdo = useAtomValue(ProjectQdoAtom);
   const { data: projectsData, isLoading: isProjectsDataLoading } = useFindProjects(projectQdo);
 
@@ -53,7 +60,7 @@ const Projects = () => {
       </Typography>
       <ProjectContainer>
         {projects.map((project, index) => (
-          <ProjectCard key={index}>
+          <ProjectCard key={index} onClick={() => navigate(`${project.id}`)}>
             <ProjectImage src={project.thumbnailUrl} alt={project.name} />
             <Typography variant="h6" sx={{ marginBottom: '8px' }}>
               {project.name}

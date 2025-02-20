@@ -4,6 +4,7 @@ import Projects from './page/project/Projects';
 import Career from './page/Career';
 import About from './page/About';
 import Layout from './shared/components/Layout';
+import ProjectDetail from './page/project/ProjectDetail';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Route path="/:id" element={<Layout />}>
           <Route path="/:id" element={<Navigate to="projects" replace />} />
           <Route path="projects" element={<Projects />} />
+          <Route path="projects/:id" element={<ProjectDetail />} />
           <Route path="career" element={<Career />} />
           <Route path="about" element={<About />} />
         </Route>
