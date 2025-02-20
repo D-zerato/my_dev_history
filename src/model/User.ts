@@ -6,6 +6,7 @@ export interface User {
   profileUrl: string;
   userActivities: any[];
   userCareers: {
+    id: number;
     companyName: string;
     description: string;
     startDate: string;
@@ -13,6 +14,7 @@ export interface User {
     orderIndex: number;
   }[];
   userCertificates: {
+    id: number;
     name: string;
     description: string;
     acquisitionDate: string;
