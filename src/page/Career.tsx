@@ -10,29 +10,56 @@ const Career = () => {
 
   return (
     <TabPanel>
-      <Typography variant="h5" sx={{ marginBottom: '16px' }}>
-        경력
-      </Typography>
-      <Typography component="p" sx={{ marginBottom: '32px' }}>
-        첫번째 회사 (????.??.?? ~ ????..??)
-      </Typography>
-      <Typography component="p" sx={{ marginBottom: '32px' }}>
-        서울 / 백엔드 개발자
-      </Typography>
+      {user?.userCareers && user.userCareers.length > 0 && (
+        <>
+          <Typography variant="h5" sx={{ marginBottom: '16px' }}>
+            경력
+          </Typography>
+          {user?.userCareers
+            .sort((a, b) => a.orderIndex - b.orderIndex)
+            .map((career) => (
+              <Typography component="p" sx={{ marginBottom: '32px' }}>
+                {career.companyName}
+                <br />
+                {career.description}
+              </Typography>
+            ))}
+        </>
+      )}
 
-      <Typography variant="h5" sx={{ marginBottom: '16px' }}>
-        활동
-      </Typography>
-      <Typography component="p" sx={{ marginBottom: '32px' }}>
-        활동 이름 (????.??.?? ~ ????..??)
-      </Typography>
+      {user?.userActivities && user?.userActivities.length > 0 && (
+        <>
+          <Typography variant="h5" sx={{ marginBottom: '16px' }}>
+            활동
+          </Typography>
+          {user?.userActivities
+            .sort((a, b) => a.orderIndex - b.orderIndex)
+            .map((activity) => (
+              <Typography component="p" sx={{ marginBottom: '32px' }}>
+                {activity.name}
+                <br />
+                {activity.description}
+              </Typography>
+            ))}
+        </>
+      )}
 
-      <Typography variant="h5" sx={{ marginBottom: '16px' }}>
-        자격증
-      </Typography>
-      <Typography component="p" sx={{ marginBottom: '32px' }}>
-        자격증 이름 (????.??.?? ~ ????..??)
-      </Typography>
+      {user?.userCertificates && user.userCertificates.length > 0 && (
+        <>
+          <Typography variant="h5" sx={{ marginBottom: '16px' }}>
+            자격증
+          </Typography>
+          {user?.userCertificates
+            .sort((a, b) => a.orderIndex - b.orderIndex)
+            .map((certificate) => (
+              <Typography component="p" sx={{ marginBottom: '32px' }}>
+                {certificate.name}
+                <br />
+                {certificate.description}
+              </Typography>
+            ))}
+        </>
+      )}
     </TabPanel>
   );
 };
