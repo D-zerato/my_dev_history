@@ -63,11 +63,17 @@ const Career = () => {
           {user?.userCertificates
             .sort((a, b) => a.orderIndex - b.orderIndex)
             .map((certificate) => (
-              <Typography component="p" sx={{ marginBottom: '32px' }} key={certificate.id}>
-                {certificate.name}
-                <br />
+              <>
+                <Typography variant="h5" sx={{ marginBottom: '5px' }} key={certificate.id}>
+                  {certificate.name}
+                </Typography>
+                <Typography component="p" sx={{ marginBottom: '5px' }} key={certificate.id}>
+                  {(certificate.acquisitionDate &&
+                    `취득일 ${dayjs(certificate.acquisitionDate).format('YYYY-MM-DD')}`) ||
+                    ''}
+                </Typography>
                 <ReactMarkdown>{certificate.description}</ReactMarkdown>
-              </Typography>
+              </>
             ))}
         </>
       )}
